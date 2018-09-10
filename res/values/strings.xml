@@ -42,4 +42,23 @@
     <string name="menu_disconnect">断开连接</string>
     <string name="menu_scan">扫描设备</string>
     <string name="menu_stop">停止扫描</string>
+    
+        <string-array name="teacher_drawer_list">
+        <item>学生列表</item>
+        <item>作业列表</item>
+        <item>练习列表</item>
+        <item>考试列表</item>
+        <item>作业分数</item>
+    </string-array>
+    
+        
+         <string-array name="menu_array">
+        <item>盘存标签(实时)</item>
+        <item>盘存标签(缓存模式)</item>
+        <item>读写标签</item>
+        <item>锁定/销毁标签</item>
+        <item>系统参数设置</item>
+ </string-array>
+        
+    
 </resources>

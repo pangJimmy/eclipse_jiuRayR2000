@@ -137,7 +137,7 @@ public class DeviceControlActivity extends Activity {
                 connect_status_bit=false;
                 show_view(false);
                 invalidateOptionsMenu();
-                clearUI();
+                //clearUI();
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
@@ -157,47 +157,8 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
-    // If a given GATT characteristic is selected, check for supported features.  This sample
-    // demonstrates 'Read' and 'Notify' features.  See
-    // http://d.android.com/reference/android/bluetooth/BluetoothGatt.html for the complete
-    // list of supported characteristic features.
-    private final ExpandableListView.OnChildClickListener servicesListClickListner =
-            new ExpandableListView.OnChildClickListener() {
-                @Override
-                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
-                                            int childPosition, long id) {
-                	
-//                	Log.i("tag", "uu");
-//                    if (mGattCharacteristics != null) {
-//                        final BluetoothGattCharacteristic characteristic =
-//                                mGattCharacteristics.get(groupPosition).get(childPosition);
-//                        final int charaProp = characteristic.getProperties();
-//                        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
-//                            // If there is an active notification on a characteristic, clear
-//                            // it first so it doesn't update the data field on the user interface.
-//                            if (mNotifyCharacteristic != null) {
-//                                mBluetoothLeService.setCharacteristicNotification(
-//                                        mNotifyCharacteristic, false);
-//                                mNotifyCharacteristic = null;
-//                            }
-//                            mBluetoothLeService.readCharacteristic(characteristic);
-//                        }
-//                        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-//                            mNotifyCharacteristic = characteristic;
-//                            mBluetoothLeService.setCharacteristicNotification(
-//                                    characteristic, true);
-//                        }
-//                        return true;
-//                    }
-                    return false;
-                }
-    };
 
-    private void clearUI() {
-        //mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
-//        mDataField.setText(R.string.no_data);
-    }
-
+    //¿ªÊ¼ÅÌ´æ
     Button send_button;
     Button enable_button;
     Button IBeacon_set_button;
