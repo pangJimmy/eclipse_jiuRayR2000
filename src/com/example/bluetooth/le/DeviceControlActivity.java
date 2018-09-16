@@ -142,14 +142,14 @@ public class DeviceControlActivity extends Activity {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-            	//»ñÈ¡·µ»ØÊı¾İ
+            	//è·å–è¿”å›æ•°æ®
             	//Toast.makeText(getApplicationContext(), intent.getStringExtra(BluetoothLeService.EXTRA_DATA), 0).show();
                 displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
                 String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
                 TagInfo tag = resolveEPCdata(data) ;
                 if(tag != null){
                 	Util.play(1, 0);
-                	//¸üĞÂÁĞ±í
+                	//æ›´æ–°åˆ—è¡¨
                 	addList(tag);
                 }
 
@@ -158,7 +158,7 @@ public class DeviceControlActivity extends Activity {
     };
 
 
-    //¿ªÊ¼ÅÌ´æ
+    //å¼€å§‹ç›˜å­˜
     Button send_button;
     Button enable_button;
     Button IBeacon_set_button;
@@ -171,9 +171,9 @@ public class DeviceControlActivity extends Activity {
     EditText dev_Name;
     Button name_button;
     
-    EditText password_ed;//ÃÜÂëÖµ
-    Button password_enable_bt;//ÃÜÂë¿ª¹Ø
-    Button password_wrt;//ÃÜÂëĞ´ÈëButton
+    EditText password_ed;//å¯†ç å€¼
+    Button password_enable_bt;//å¯†ç å¼€å…³
+    Button password_wrt;//å¯†ç å†™å…¥Button
     
     Button adv_time1,adv_time2,adv_time3,adv_time4;
     
@@ -181,7 +181,7 @@ public class DeviceControlActivity extends Activity {
     
     Button clear_button;
     
-    private ListView lv ;//±êÇ©ÁĞ±í
+    private ListView lv ;//æ ‡ç­¾åˆ—è¡¨
     private Button IO_H_button,IO_L_button;//out io
     Timer timer = new Timer();  
 
@@ -224,14 +224,14 @@ public class DeviceControlActivity extends Activity {
 
         
         send_button=(Button)findViewById(R.id.tx_button);//send data 1002
-        send_button.setOnClickListener(listener);//ÉèÖÃ¼àÌı  
+        send_button.setOnClickListener(listener);//è®¾ç½®ç›‘å¬  
         
         clear_button=(Button)findViewById(R.id.clear_button);//send data 1002
-        clear_button.setOnClickListener(listener);//ÉèÖÃ¼àÌı  
+        clear_button.setOnClickListener(listener);//è®¾ç½®ç›‘å¬  
         
         txd_txt=(EditText)findViewById(R.id.tx_text);//1002 data
-//        txd_txt.setText("AA04FF0A0049");//ÉèÖÃ¹¤×÷ÌìÎª1
-        //¿ìËÙ¶àÌìÏßÅÌ´æ
+//        txd_txt.setText("AA04FF0A0049");//è®¾ç½®å·¥ä½œå¤©ä¸º1
+        //å¿«é€Ÿå¤šå¤©çº¿ç›˜å­˜
         txd_txt.setText("AA0EFF42F40001010102010301070002");
         rx_data_id_1=(EditText)findViewById(R.id.rx_data_id_1);//1002 data
         rx_data_id_1.setText("");
@@ -241,7 +241,7 @@ public class DeviceControlActivity extends Activity {
         show_view(false);
         mHandler = new Handler();
         
-        timer.schedule(task, 1000, 1000); // 1sºóÖ´ĞĞtask,¾­¹ı1sÔÙ´ÎÖ´ĞĞ  
+        timer.schedule(task, 1000, 1000); // 1såæ‰§è¡Œtask,ç»è¿‡1så†æ¬¡æ‰§è¡Œ  
         
         boolean sg;
         getActionBar().setTitle(mDeviceName);
@@ -251,7 +251,7 @@ public class DeviceControlActivity extends Activity {
         //getActionBar().setTitle( "="+BluetoothLeService );
         //mDataField.setText("="+sg );
         updateConnectionState(R.string.connecting);
-        //¿ªÆôÏß³Ì
+        //å¼€å¯çº¿ç¨‹
         new Thread(inventoryTask).start();
     }
     
@@ -276,7 +276,7 @@ public class DeviceControlActivity extends Activity {
     	  
         @Override  
         public void run() {  
-            // ĞèÒª×öµÄÊÂ:·¢ËÍÏûÏ¢  
+            // éœ€è¦åšçš„äº‹:å‘é€æ¶ˆæ¯  
             Message message = new Message();  
             message.what = 1;  
             handler.sendMessage(message);  
@@ -287,7 +287,7 @@ public class DeviceControlActivity extends Activity {
     private boolean isRunning = true;
     private boolean isStart = false ;
     /**
-     * ÅÌ´æÏß³Ì
+     * ç›˜å­˜çº¿ç¨‹
      */
     private Runnable inventoryTask = new Runnable() {
 		
@@ -298,12 +298,12 @@ public class DeviceControlActivity extends Activity {
 					
 	        		if( connect_status_bit )
 	        		  {
-	        			//ÊµÊ±ÅÌ´æÖ¸Áî
+	        			//å®æ—¶ç›˜å­˜æŒ‡ä»¤
 	              		String tx_string="AA04FFEF0163";
 	              		mBluetoothLeService.txxx(tx_string);
 	        		  }else{
 	        			  //Toast.makeText(this, "Deleted Successfully!", Toast.LENGTH_LONG).show(); 
-//	        			  Toast toast = Toast.makeText(DeviceControlActivity.this, "Éè±¸Ã»ÓĞÁ¬½Ó£¡", Toast.LENGTH_SHORT); 
+//	        			  Toast toast = Toast.makeText(DeviceControlActivity.this, "è®¾å¤‡æ²¡æœ‰è¿æ¥ï¼", Toast.LENGTH_SHORT); 
 //	        			  toast.show(); 
 	        		  }
 	        		
@@ -323,7 +323,7 @@ public class DeviceControlActivity extends Activity {
 	private List<TagInfo> listTag = new ArrayList<TagInfo>();
 	private List<Map<String, Object>> listMap ;
 	private Context mContext ;
-	//¸üĞÂÊı¾İ
+	//æ›´æ–°æ•°æ®
 	class Madapter extends BaseAdapter{
 		
 		
@@ -382,17 +382,17 @@ public class DeviceControlActivity extends Activity {
 	}
    ////////////////////////////////////////////////////////////////////// 
 	
-	//±êÇ©¼¯ºÏ
+	//æ ‡ç­¾é›†åˆ
 	private Set<String> setTag = new HashSet<String>() ;
 	/**
-	 * ½«±êÇ©¼ÓÈëÁĞ±í
+	 * å°†æ ‡ç­¾åŠ å…¥åˆ—è¡¨
 	 */
 	private void addList(TagInfo tag){
 		int count = 1;
 		TagInfo mmTag = new TagInfo();
 		if(setTag.isEmpty()){
 			
-			//Ê×´ÎÌí¼Ó
+			//é¦–æ¬¡æ·»åŠ 
 
 			mmTag.setCount(count);
 			mmTag.setRssi(tag.getRssi());
@@ -403,12 +403,12 @@ public class DeviceControlActivity extends Activity {
 			listTag.add(mmTag) ;
 		}else{
 			if(setTag.contains(tag.getEpc())){
-				//¼¯ºÏÖĞ°üº¬
+				//é›†åˆä¸­åŒ…å«
 //				count += tag.getCount() ;
 //				tag.setCount(count);
 			}else{
-				//¼¯ºÏÖĞÃ»ÓĞ
-				//Ê×´ÎÌí¼Ó
+				//é›†åˆä¸­æ²¡æœ‰
+				//é¦–æ¬¡æ·»åŠ 
 				mmTag.setCount(count);
 				mmTag.setRssi(tag.getRssi());
 				mmTag.setPc(tag.getPc());
@@ -436,9 +436,9 @@ public class DeviceControlActivity extends Activity {
     		listMap.add(map) ;
     		
     	}
-    	//¸üĞÂ´ÎÊı
+    	//æ›´æ–°æ¬¡æ•°
     	mDataField.setText("" + setTag.size());
-    	//Ë¢ĞÂÁĞ±í
+    	//åˆ·æ–°åˆ—è¡¨
     	lv.setAdapter(new SimpleAdapter(mContext,
 				listMap, R.layout.item_tag, new String[] { 
 						"id", "epc","pc","rssi","cnt"  }, new int[] {
@@ -451,7 +451,7 @@ public class DeviceControlActivity extends Activity {
 	////////////////////////////////
 	byte START = (byte )0xFA ;
 	byte ADDR = (byte )0xFF ;
-	//ÓÃÓÚ´æ´¢ÁÙÊ±Êı¾İ£¬µ±Êı¾İ½ÓÊÕ²»ÍêÕûÊ±
+	//ç”¨äºå­˜å‚¨ä¸´æ—¶æ•°æ®ï¼Œå½“æ•°æ®æ¥æ”¶ä¸å®Œæ•´æ—¶
 	private StringBuilder sb = new StringBuilder() ;
 	private StringBuffer tempData = new StringBuffer();
 	private TagInfo resolveEPCdata(String data){
@@ -461,23 +461,23 @@ public class DeviceControlActivity extends Activity {
 		byte[] epcBytes = Tools.HexString2Bytes(tempData.toString()) ;
 		int len ;
 		if(epcBytes != null && epcBytes.length > 5){
-			//ÅĞ¶ÏÆğÊ¼Î»FA
+			//åˆ¤æ–­èµ·å§‹ä½FA
 			if(START != epcBytes[0]){
 				tempData = new StringBuffer();
 				return tag;
 			}
-			//³¤¶È
+			//é•¿åº¦
 			len = epcBytes[1]&0xff  ;
-			//ÅĞ¶ÏÖ¸ÁîÊÇ·ñÍêÕû½ÓÊÕ,(ÍêÕûÖ¸Áî³¤¶ÈÎªlen + 2)
+			//åˆ¤æ–­æŒ‡ä»¤æ˜¯å¦å®Œæ•´æ¥æ”¶,(å®Œæ•´æŒ‡ä»¤é•¿åº¦ä¸ºlen + 2)
 			if(epcBytes.length < (len + 2)){
 				
 				return tag;
 			}
-			//È¡³öÍêÕûÊı¾İ
+			//å–å‡ºå®Œæ•´æ•°æ®
 			byte[] realData = new byte[len + 2] ;
-			//½«ÍêÕûÊı¾İ¿½³öÀ´
+			//å°†å®Œæ•´æ•°æ®æ‹·å‡ºæ¥
 			System.arraycopy(epcBytes, 0, realData, 0, realData.length);
-			//ÏÈÇå¿Õbuffer,Ê£ÏÂÊı¾İ¼ÌĞø´æÔÚbufferÖĞ
+			//å…ˆæ¸…ç©ºbuffer,å‰©ä¸‹æ•°æ®ç»§ç»­å­˜åœ¨bufferä¸­
 			tempData = new StringBuffer();
 			if((epcBytes.length - len -2) != 0){
 				byte[] mData = new byte[epcBytes.length - len -2] ;
@@ -485,21 +485,21 @@ public class DeviceControlActivity extends Activity {
 				tempData.append(Tools.Bytes2HexString(mData, mData.length));
 			}
 			
-			//ÊÇ·ñÊÇÅÌ´æÖ¸Áî
+			//æ˜¯å¦æ˜¯ç›˜å­˜æŒ‡ä»¤
 			if(realData[3] != (byte)0xEF ){
 				
 				return tag ;
 			}
-			//Ğ£ÑéÎ»
+			//æ ¡éªŒä½
 			byte crc = checkSum(realData, 0, realData.length - 1) ;
 			if(crc != realData[realData.length - 1]){
 				
 				return tag;
 			}
 			Log.e("D", "real--->" + Tools.Bytes2HexString(realData, realData.length));
-			//È¡Êı¾İ
-			//ÓĞ±êÇ©FA 13 FF EF D8 34 00 20 18 05 16 00 05 37 02 95 FF FF FF 67 6F
-			//ÎŞ±êÇ©FA 0A FF EF 00 00 00 00 00 00 00 0E
+			//å–æ•°æ®
+			//æœ‰æ ‡ç­¾FA 13 FF EF D8 34 00 20 18 05 16 00 05 37 02 95 FF FF FF 67 6F
+			//æ— æ ‡ç­¾FA 0A FF EF 00 00 00 00 00 00 00 0E
 			if(len > 10){
 				tag = new TagInfo() ;
 				byte[] pc = {realData[5] , realData[6]} ;
@@ -517,7 +517,7 @@ public class DeviceControlActivity extends Activity {
 	}
 
 	/**
-	 * ¼ÆËãĞ£ÑéÎ»
+	 * è®¡ç®—æ ¡éªŒä½
 	 * @param btAryBuffer
 	 * @param nStartPos
 	 * @param nLen
@@ -534,32 +534,32 @@ public class DeviceControlActivity extends Activity {
     }
 	
     /**
-     * ¼àÌı°´¼ü
+     * ç›‘å¬æŒ‰é”®
      */
-    Button.OnClickListener listener = new Button.OnClickListener(){//´´½¨¼àÌı¶ÔÏó    
+    Button.OnClickListener listener = new Button.OnClickListener(){//åˆ›å»ºç›‘å¬å¯¹è±¡    
         public void onClick(View v){    
-            //String strTmp="µã»÷Button02";    
+            //String strTmp="ç‚¹å‡»Button02";    
             //Ev1.setText(strTmp);   
         	switch( v.getId())
         	{
-        	case R.id.tx_button ://uuid1002 Êı´«Í¨µÀ·¢ËÍÊı¾İ
+        	case R.id.tx_button ://uuid1002 æ•°ä¼ é€šé“å‘é€æ•°æ®
         		if( connect_status_bit )
       		  {
 //            		String tx_string=txd_txt.getText().toString().trim();
 
             		if(isStart){
             			isStart = false ;
-            			send_button.setText("¿ªÊ¼");
+            			send_button.setText("å¼€å§‹");
             		}else{
-            			send_button.setText("Í£Ö¹");
-            			//ÉèÖÃ¶àÌìÏßÅÌ´æ
+            			send_button.setText("åœæ­¢");
+            			//è®¾ç½®å¤šå¤©çº¿ç›˜å­˜
             			String tx_string="AA0EFF42F40001010102010301070002" ;
                 		mBluetoothLeService.txxx(tx_string);
             			isStart = true ;
             		}
       		  }else{
       			  //Toast.makeText(this, "Deleted Successfully!", Toast.LENGTH_LONG).show(); 
-      			  Toast toast = Toast.makeText(DeviceControlActivity.this, "Éè±¸Ã»ÓĞÁ¬½Ó£¡", Toast.LENGTH_SHORT); 
+      			  Toast toast = Toast.makeText(DeviceControlActivity.this, "è®¾å¤‡æ²¡æœ‰è¿æ¥ï¼", Toast.LENGTH_SHORT); 
       			  toast.show(); 
       		  }
         		break;
@@ -596,7 +596,7 @@ public class DeviceControlActivity extends Activity {
     protected void onPause() {
         super.onPause();
 		isStart = false ;
-		send_button.setText("¿ªÊ¼");
+		send_button.setText("å¼€å§‹");
         unregisterReceiver(mGattUpdateReceiver);
     }
 
@@ -706,7 +706,7 @@ int len_g = 0;
 				 updateConnectionState(R.string.connected);
 			  }else{
 				  //Toast.makeText(this, "Deleted Successfully!", Toast.LENGTH_LONG).show(); 
-				  Toast toast = Toast.makeText(DeviceControlActivity.this, "Éè±¸Ã»ÓĞÁ¬½Ó£¡", Toast.LENGTH_SHORT); 
+				  Toast toast = Toast.makeText(DeviceControlActivity.this, "è®¾å¤‡æ²¡æœ‰è¿æ¥ï¼", Toast.LENGTH_SHORT); 
 				  toast.show(); 
 			  }
         }

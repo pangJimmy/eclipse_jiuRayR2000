@@ -3,7 +3,7 @@ package com.example.bluetooth.le;
 
 public class Tools {
 
-	//byte ×ªÊ®Áù½øÖÆ
+
 		public static String Bytes2HexString(byte[] b, int size) {
 		    String ret = "";
 		    for (int i = 0; i < size; i++) {
@@ -24,7 +24,7 @@ public class Tools {
 		    return ret;
 		  }
 		
-		//Ê®Áù½øÖÆ×ªbyte
+		//åå…­è¿›åˆ¶å­—ç¬¦ä¸²è½¬byte[]
 		public static byte[] HexString2Bytes(String src) {
 			int len = src.length() / 2;
 			byte[] ret = new byte[len];
@@ -74,12 +74,12 @@ public class Tools {
 	    }
 	    public static byte[] hex2byte(byte[] b) {
 	        if ((b.length % 2) != 0) {
-	            throw new IllegalArgumentException("³¤¶È²»ÊÇÅ¼Êý");
+	            throw new IllegalArgumentException("ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½Å¼ï¿½ï¿½");
 	        }
 	        byte[] b2 = new byte[b.length / 2];
 	        for (int n = 0; n < b.length; n += 2) {
 	            String item = new String(b, n, 2);
-	            // Á½Î»Ò»×é£¬±íÊ¾Ò»¸ö×Ö½Ú,°ÑÕâÑù±íÊ¾µÄ16½øÖÆ×Ö·û´®£¬»¹Ô­³ÉÒ»¸ö½øÖÆ×Ö½Ú
+	            // ï¿½ï¿½Î»Ò»ï¿½é£¬ï¿½ï¿½Ê¾Ò»ï¿½ï¿½ï¿½Ö½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
 	            b2[n / 2] = (byte) Integer.parseInt(item, 16);
 	        }
 	        b = null;
@@ -87,5 +87,22 @@ public class Tools {
 	    }
 		
 		
+	    
+		/**
+		 * è®¡ç®—æ ¡éªŒä½
+		 * @param btAryBuffer
+		 * @param nStartPos
+		 * @param nLen
+		 * @return
+		 */
+		public static  byte checkSum(byte[] btAryBuffer, int nStartPos, int nLen) {
+	        byte btSum = 0x00;
+
+	        for (int nloop = nStartPos; nloop < nStartPos + nLen; nloop++ ) {
+	            btSum += btAryBuffer[nloop];
+	        }
+
+	        return (byte)(((~btSum) + 1) & 0xFF);
+	    }
 
 }

@@ -34,13 +34,15 @@ limitations under the License.
                  android:icon="@drawable/logo"
                  android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
                  >
-        <activity android:name=".MainActivity"
+        <activity android:name=".DeviceScanActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".DeviceControlActivity"/>
         <service android:name=".BluetoothLeService" android:enabled="true"/>
     </application>

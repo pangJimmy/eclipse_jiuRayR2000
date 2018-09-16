@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/select_tag"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView         
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="起始地址："/>
+
+        <EditText
+            android:id="@+id/editText_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:ems="4" >
+        </EditText>
+                <TextView         
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="长度："/>
+
+        <EditText
+            android:id="@+id/editText_len"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:ems="4" >
+        </EditText>
+
+    </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        <TextView         
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="写数据(hex)："/>
+
+        <EditText
+            android:id="@+id/editText_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0123"
+            android:layout_weight="1" >
+        </EditText>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/button_read"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="读数据" />
+
+            <Button
+                android:id="@+id/button_write"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="写数据" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:layout_margin="3dp"
+            android:background="@drawable/corner_back"
+             >
+
+        </EditText>
+
+</LinearLayout>
