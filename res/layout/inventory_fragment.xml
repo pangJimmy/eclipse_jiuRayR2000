@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:text="序号" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="#33000000"
+         />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="center"
+        android:text="EPC" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="#33000000"
+         />
+    <TextView
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="PC" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="#33000000"
+         />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="RSSI" />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="#33000000"
+         />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="次数" />
+    
+
+</LinearLayout>
+<View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#33000000"
+         />
+     <ListView 
+         android:id="@+id/lv"
+         android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+          android:layout_weight="1"
+    
+         ></ListView>
+     
+      <LinearLayout android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="50dp"
+        >
+           <Button android:id="@+id/tx_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始"
+            android:textSize="10sp"
+            android:minWidth="180dp"
+            android:layout_marginLeft="50dp"
+            />
+           <Button android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除"
+            android:textSize="10sp"
+            android:layout_marginLeft="50dp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
