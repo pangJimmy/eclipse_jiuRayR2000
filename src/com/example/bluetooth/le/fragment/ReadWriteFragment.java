@@ -7,7 +7,10 @@ import com.example.bluetooth.le.R;
 import com.example.bluetooth.le.SelectTagAdpter;
 import com.example.bluetooth.le.TagInfo;
 import com.example.bluetooth.le.Util;
+import com.jiuray.uhf.command.Tools;
+import com.jiuray.uhf.command.UhfCommandHelper;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,9 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,8 +55,37 @@ public class ReadWriteFragment extends Fragment implements OnClickListener{
 	/*写按键*/
 	private Button btnWrite ;
 	
+	/*标签列表*/
 	private List<TagInfo> listTag ;
 	
+	/*选中的标签*/
+	private TagInfo selectTag ;
+	
+	/*数据区*/
+	private int membank ;
+	/*起始地址*/
+	private int addr ;
+	/*长度*/
+	private int len ;
+	/*访问密码*/
+	private byte[] password ;
+	
+	
+	/** 用于接收主界面返回的数据*/
+	private BroadcastReceiver receiver = new BroadcastReceiver(){
+		public void onReceive(Context context, android.content.Intent intent) {
+			String action = intent.getAction() ;
+			String data = intent.getStringExtra("data") ;
+			if(MainActivity.ACTION_BLE_RECV_DATA.equals(action)){
+//              TagInfo tag = resolveEPCdata(data) ;
+//              if(tag != null){
+//              	Util.play(1, 0);
+//              	//更新列表
+//              	addList(tag);
+//              }
+			}
+		};
+	};
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -74,7 +108,14 @@ public class ReadWriteFragment extends Fragment implements OnClickListener{
 		if(listTag != null){
 			spSelectTag.setAdapter(new SelectTagAdpter(mActivity, listTag));
 		}
-
+		String[] memArrays = mActivity.getResources().getStringArray(R.array.membank_list) ;
+		spData.setAdapter(new ArrayAdapter<String>(mActivity, 
+				android.R.layout.simple_spinner_dropdown_item,memArrays));
+		//默认选择USER区
+		spData.setSelection(3);
+		UhfCommandHelper helper = new UhfCommandHelper() ;
+		
+		helper.read(3, 0, 1, Tools.HexString2Bytes("00000000"));
 		return view;
 	}
 

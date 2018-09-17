@@ -59,6 +59,13 @@
         <item>锁定/销毁标签</item>
         <item>系统参数设置</item>
  </string-array>
+ 
+         <string-array name="membank_list">
+        <item>RESERVED</item>
+        <item>EPC</item>
+        <item>TID</item>
+        <item>USER</item>
+    </string-array>
         
     
 </resources>

@@ -76,7 +76,10 @@ public class MainActivity extends FragmentActivity {
     private String mDeviceName;
     private String mDeviceAddress;
     private Handler mHandler;
-
+    
+    /**盘存界面*/
+    private InventoryFragment inventoryFrag = new InventoryFragment();
+	private ReadWriteFragment readwriteFrag = new ReadWriteFragment();
     // Stops scanning after 10 seconds.
     private static final long SCAN_PERIOD = 1000;
     
@@ -315,6 +318,9 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
 
+	boolean isFirstInventory = true ;
+	boolean isFirstRead = true ;
+	private Fragment currentFrag ;
 	/**
 	 * 切换主视图区域的Fragment
 	 * 
@@ -322,20 +328,45 @@ public class MainActivity extends FragmentActivity {
 	 */
 	private void selectItem(int position) {
 		//默认为盘存界面
-		Fragment fragment = new InventoryFragment();
+		Fragment fragment = inventoryFrag;
 		Bundle args = new Bundle();
+		android.support.v4.app.FragmentManager fragmentManager = this.getSupportFragmentManager();
 		switch (position) {
 		case 0://盘存
 			args.putString("key", mMenuTitles[position]);
-			fragment = new InventoryFragment();
+			 
+			if(isFirstInventory){
+				inventoryFrag.setArguments(args);
+				fragmentManager.beginTransaction()
+						.add(R.id.content_frame, inventoryFrag).commit();
+				isFirstInventory = false ;
+			}else{
+				switchContent(currentFrag, inventoryFrag, false);
+			}
+			currentFrag = inventoryFrag ;
 			break;
 		case 1://缓存模式盘存
 			args.putString("key", mMenuTitles[position]);
-
+			fragment = new ContentFragment() ;
+			fragment.setArguments(args); // FragmentActivity将点击的菜单列表标题传递给Fragment
+//			fragmentManager.beginTransaction()
+//					.replace(R.id.content_frame, fragment).commit();
+			switchContent(currentFrag, fragment, true);
+			currentFrag = fragment ;
 			break;
 		case 2://读写标签
 			args.putString("key", mMenuTitles[position]);
-			fragment = new ReadWriteFragment();
+			//fragment = new ReadWriteFragment();
+			
+			if(isFirstRead){
+				readwriteFrag.setArguments(args);
+				switchContent(currentFrag, readwriteFrag, true);
+				isFirstRead = false ;
+			}else{
+				switchContent(currentFrag, readwriteFrag, false);
+			}
+
+			currentFrag = readwriteFrag ;
 			break;
 		case 3:
 			args.putString("key", mMenuTitles[position]);
@@ -343,16 +374,25 @@ public class MainActivity extends FragmentActivity {
 		default:
 			break;
 		}
-		fragment.setArguments(args); // FragmentActivity将点击的菜单列表标题传递给Fragment
-		android.support.v4.app.FragmentManager fragmentManager = this.getSupportFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
+
 		
 
 		// 更新选择后的item和title，然后关闭菜单
 		mMenuListView.setItemChecked(position, true);
 		setTitle(mMenuTitles[position]);
 		mDrawerLayout.closeDrawer(mMenuListView);
+	}
+	
+	/**切换fragment保存fragment的状态*/
+	private void switchContent(Fragment from, Fragment to, boolean isFirst){
+		if(from != to){
+			android.support.v4.app.FragmentManager fragmentManager = this.getSupportFragmentManager();
+			if(isFirst){
+				fragmentManager.beginTransaction().hide(from).add(R.id.content_frame, to).commit() ;
+			}else{
+				fragmentManager.beginTransaction().hide(from).show(to).commit() ;
+			}
+		}
 	}
 	
 	
