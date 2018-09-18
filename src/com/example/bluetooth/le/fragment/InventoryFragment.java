@@ -78,11 +78,8 @@ public class InventoryFragment extends Fragment implements OnClickListener{
 		btnStart.setOnClickListener(this);
 		btnClear.setOnClickListener(this);
 		Util.initSoundPool(mActivity);
-		return view;
-	}
-	
-	@Override
-	public void onResume() {
+		
+		Log.e("onResume", "onResume") ;
 		//重新加载时的操作
 		IntentFilter filter = new IntentFilter() ;
 		filter.addAction(MainActivity.ACTION_BLE_RECV_DATA);
@@ -92,19 +89,60 @@ public class InventoryFragment extends Fragment implements OnClickListener{
 	    isStart = false ;
 	    //启动盘存线程
 	    new Thread(inventoryTask).start(); 
-		super.onResume();
+		return view;
 	}
+	
+//	@Override
+//	public void onResume() {
+//		Log.e("onResume", "onResume") ;
+//		//重新加载时的操作
+//		IntentFilter filter = new IntentFilter() ;
+//		filter.addAction(MainActivity.ACTION_BLE_RECV_DATA);
+//		mActivity.registerReceiver(receiver, filter) ;
+//		
+//		isRunning = true;
+//	    isStart = false ;
+//	    //启动盘存线程
+//	    new Thread(inventoryTask).start(); 
+//		super.onResume();
+//	}
+	
+//	@Override
+//	public void onPause() {
+//		Log.e("onPause", "onPause") ;
+//		//切换和暂停时的操作
+//		isStart = false ;
+//		btnStart.setText("开始");
+//		
+//		mActivity.unregisterReceiver(receiver);
+//		super.onPause();
+//	}
 	
 	@Override
-	public void onPause() {
-		//切换和暂停时的操作
-		isStart = false ;
-		btnStart.setText("开始");
-		
-		mActivity.unregisterReceiver(receiver);
-		super.onPause();
+	public void onHiddenChanged(boolean hidden) {
+		// TODO Auto-generated method stub
+		super.onHiddenChanged(hidden);
+		Log.e("onHiddenChanged", "onHiddenChanged = " + hidden) ;
+		if(hidden){
+
+		    
+			//切换和暂停时的操作
+			isStart = false ;
+			btnStart.setText("开始");
+			
+			mActivity.unregisterReceiver(receiver);
+		}else{
+			//重新加载时的操作
+			IntentFilter filter = new IntentFilter() ;
+			filter.addAction(MainActivity.ACTION_BLE_RECV_DATA);
+			mActivity.registerReceiver(receiver, filter) ;
+			
+			isRunning = true;
+		    isStart = false ;
+		    //启动盘存线程
+		    new Thread(inventoryTask).start(); 
+		}
 	}
-	
 	
 	@Override
 	public void onClick(View view) {

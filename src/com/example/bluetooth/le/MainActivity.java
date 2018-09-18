@@ -35,6 +35,7 @@ import com.balysv.materialmenu.MaterialMenuIcon;
 import com.example.bluetooth.le.fragment.ContentFragment;
 import com.example.bluetooth.le.fragment.InventoryFragment;
 import com.example.bluetooth.le.fragment.ReadWriteFragment;
+import com.jiuray.uhf.command.UhfCommandHelper;
 
 public class MainActivity extends FragmentActivity {
 
@@ -53,6 +54,8 @@ public class MainActivity extends FragmentActivity {
 	private boolean isDirection_left = false;
 	/** 右边栏打开/关闭状态 */
 	private boolean isDirection_right = false;
+	/** 超高频指令集 */
+	public UhfCommandHelper uhfHelper ;
 	
 	/** 模块返回数据 */
 	public static final String ACTION_BLE_RECV_DATA = "com.ble.recv";
@@ -200,6 +203,8 @@ public class MainActivity extends FragmentActivity {
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         //连接蓝牙服务
         sg = bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        
+        uhfHelper = new UhfCommandHelper() ;
         
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mMenuListView = (ListView) findViewById(R.id.left_drawer);
@@ -388,7 +393,7 @@ public class MainActivity extends FragmentActivity {
 		if(from != to){
 			android.support.v4.app.FragmentManager fragmentManager = this.getSupportFragmentManager();
 			if(isFirst){
-				fragmentManager.beginTransaction().hide(from).add(R.id.content_frame, to).commit() ;
+				fragmentManager.beginTransaction().hide(from).add(R.id.content_frame, to).show(to).commit() ;
 			}else{
 				fragmentManager.beginTransaction().hide(from).show(to).commit() ;
 			}

@@ -14,26 +14,20 @@ public class UhfCommandHelper {
 //////////////////系统指令//////////////////////////////////////////////
     public byte[] reset(){
         byte[] cmd = genCmd(UhfCommand.CMD_RESET, null) ;
-        if (cmd != null) {
-            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
-        }
+    	LogCMD(cmd) ;
         return cmd ;
     }
 
     /**获取硬件版本号*/
     public byte[] getFirwaremVersion(){
         byte[] cmd = genCmd(UhfCommand.CMD_GET_FIRMWARE_VERSION, null) ;
-        if (cmd != null) {
-            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
-        }
+    	LogCMD(cmd) ;
         return cmd ;
     }
 
     public byte[] getOutPower(){
         byte[] cmd = genCmd(UhfCommand.CMD_GET_OUTPUT_POWER, null) ;
-        if (cmd != null) {
-            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
-        }
+    	LogCMD(cmd) ;
         return cmd ;
     }
 
@@ -46,9 +40,7 @@ public class UhfCommandHelper {
     public byte[] inventory(int repeat) {
         byte [] data = {(byte)repeat};
         byte[] cmd = genCmd(UhfCommand.CMD_INVENTORY, data) ;
-        if (cmd != null) {
-            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
-        }
+    	LogCMD(cmd) ;
         return cmd ;
     }
     
@@ -76,12 +68,27 @@ public class UhfCommandHelper {
     		System.arraycopy(password, 0, data, 3, 4);
     	}
     	byte[] cmd = genCmd(UhfCommand.CMD_READ, data) ;
-        if (cmd != null) {
-            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
-        }
-    	return null ;
+    	LogCMD(cmd) ;
+    	return cmd ;
     }
-
+    
+    /**
+     * 选定标签  匹配ACCESS操作的EPC号
+     * @param mode 匹配模式， 0x00	EPC匹配一直有效，直到下一次刷新。0x01	清除EPC匹配。
+     * @param epc  选定的EPC
+     * @return
+     */
+    public byte[] matchByEPC(int mode ,byte[] epc){
+    	byte[] cmd = null ;
+    	byte[] data = new byte[ 2+ epc.length] ;
+    	data[0] = (byte) mode ;
+    	data[1] = (byte) epc.length ;
+    	System.arraycopy(epc, 0, data, 2, epc.length);
+    	cmd = genCmd(UhfCommand.CMD_SET_ACCESS_EPC_MATCH, data) ;
+    	LogCMD(cmd) ;
+    	return cmd ;
+    }
+/////////////////////////////////////////////////////////
     /**
      * Head  	Len 	Address	  Cmd 	 Data	 Check
      * 1Byte   1 Byte	 1 Byte	1 Byte	N Bytes	 1 Byte
@@ -106,6 +113,12 @@ public class UhfCommandHelper {
          return cmd ;
     }
 
+    //打印log
+    private void LogCMD(byte[] cmd ){
+        if (cmd != null) {
+            Log.e(TAG, Tools.Bytes2HexString(cmd, cmd.length)) ;
+        }
+    }
     /**
      * 计算校验位
      * @param btAryBuffer
