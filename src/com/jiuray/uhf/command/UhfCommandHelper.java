@@ -1,6 +1,14 @@
 package com.jiuray.uhf.command;
 
+import com.example.bluetooth.le.BluetoothLeService;
+
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by jj on 2018/8/19.
@@ -10,7 +18,79 @@ import android.util.Log;
 public class UhfCommandHelper {
 
     private final String TAG = "UhfCommandHelper";
+    
+	private Context context ;
+	private BluetoothGattCharacteristic character ;
+	private BluetoothLeService bleService ;
+    
+    public UhfCommandHelper(){} 
+    
+    
+    public UhfCommandHelper(Context context,BluetoothLeService service){
+		this.context = context ;
 
+		this.bleService = service ;
+    }
+
+    
+	public void registerReceiver(){
+		context.registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+	}
+	
+	public void unregisterReceiver(){
+		context.unregisterReceiver(mGattUpdateReceiver);
+	}
+	
+    private static IntentFilter makeGattUpdateIntentFilter() {
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+        return intentFilter;
+    }
+    
+    //接收蓝牙模块返回
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            Log.e(TAG, "action = " + action) ;
+            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+                //mConnected = true;
+                
+                
+//                connect_status_bit=true;
+//               
+//                invalidateOptionsMenu();
+    			//实时盘存指令
+
+            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+//                mConnected = false;
+//                
+//                //updateConnectionState(R.string.disconnected);
+//                connect_status_bit=false;
+//                //show_view(false);
+//                invalidateOptionsMenu();
+                //clearUI();
+            } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+                // Show all the supported services and characteristics on the user interface.
+//                displayGattServices(mBluetoothLeService.getSupportedGattServices());
+            } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+            	//获取返回数据
+            	//Toast.makeText(context, intent.getStringExtra(BluetoothLeService.EXTRA_DATA), 0).show();
+            	//将数据再以广播的形式传出去,下发给fragment
+            	//在此处将数据返回去
+//                String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
+//                Intent i = new Intent() ;
+//                i.setAction(ACTION_BLE_RECV_DATA) ;
+//                i.putExtra("data", data) ;
+//                sendBroadcast(i);
+            }
+        }
+    };
+    
+    
 //////////////////系统指令//////////////////////////////////////////////
     public byte[] reset(){
         byte[] cmd = genCmd(UhfCommand.CMD_RESET, null) ;

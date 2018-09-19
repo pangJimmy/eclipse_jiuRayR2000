@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity {
     private int i = 0;  
     private int TIME = 1000; 
     
+    private UhfCommandHelper helper ;
 	private Context mContext ;
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -102,6 +103,9 @@ public class MainActivity extends FragmentActivity {
             }
             // Automatically connects to the device upon successful start-up initialization.
             mBluetoothLeService.connect(mDeviceAddress);
+            //pang test
+            helper = new UhfCommandHelper(MainActivity.this, mBluetoothLeService) ;
+            helper.registerReceiver();
         }
 
         @Override
@@ -132,7 +136,7 @@ public class MainActivity extends FragmentActivity {
                 connect_status_bit=true;
                
                 invalidateOptionsMenu();
-    			//实时盘存指令
+    			
 
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;

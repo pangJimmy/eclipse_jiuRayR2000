@@ -98,12 +98,12 @@ public class BluetoothLeService extends Service {
     }
     public  byte[] hex2byte(byte[] b) {
         if ((b.length % 2) != 0) {
-            throw new IllegalArgumentException("³¤¶È²»ÊÇÅ¼Êý");
+            throw new IllegalArgumentException("ï¿½ï¿½ï¿½È²ï¿½ï¿½ï¿½Å¼ï¿½ï¿½");
         }
         byte[] b2 = new byte[b.length / 2];
         for (int n = 0; n < b.length; n += 2) {
             String item = new String(b, n, 2);
-            // Á½Î»Ò»×é£¬±íÊ¾Ò»¸ö×Ö½Ú,°ÑÕâÑù±íÊ¾µÄ16½øÖÆ×Ö·û´®£¬»¹Ô­³ÉÒ»¸ö½øÖÆ×Ö½Ú
+            // ï¿½ï¿½Î»Ò»ï¿½é£¬ï¿½ï¿½Ê¾Ò»ï¿½ï¿½ï¿½Ö½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½16ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ô­ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½
             b2[n / 2] = (byte) Integer.parseInt(item, 16);
         }
         b = null;
@@ -118,6 +118,22 @@ public class BluetoothLeService extends Service {
 	public void txxx(String g){
 		g=""+g;
 		WriteBytes= hex2byte(g.toString().getBytes());
+		
+		BluetoothGattCharacteristic gg;
+		
+		gg=mBluetoothGatt.getService(UUID.fromString(Service_uuid)).getCharacteristic(UUID.fromString(Characteristic_uuid_TX));
+		//byte t[]={51,1,2};
+		gg.setValue(WriteBytes);
+		mBluetoothGatt.writeCharacteristic(gg);
+		//mBluetoothGatt.setCharacteristicNotification(gg, true);
+		
+		//gg=mBluetoothGatt.getService(UUID.fromString(Service_uuid)).getCharacteristic(UUID.fromString(Characteristic_uuid_FUNCTION));
+		//mBluetoothGatt.setCharacteristicNotification(gg, true);
+	}
+	
+	public void txxx(byte[] g){
+		
+		WriteBytes= g;
 		
 		BluetoothGattCharacteristic gg;
 		
@@ -153,7 +169,7 @@ public class BluetoothLeService extends Service {
 			BluetoothGattCharacteristic ale;// =service.getCharacteristic(UUID.fromString(Characteristic_uuid_TX));
 			switch( 0 )
 			{
-				case 0://0xFFE1 //Í¸´«
+				case 0://0xFFE1 //Í¸ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString(Characteristic_uuid_TX));
 				}break;
@@ -169,35 +185,35 @@ public class BluetoothLeService extends Service {
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe4-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 4://0xFFE5 //¹ã²¥¼ä¸ô
+				case 4://0xFFE5 //ï¿½ã²¥ï¿½ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe5-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 5://0xFFE6 //ÃÜÂë¹¦ÄÜ
+				case 5://0xFFE6 //ï¿½ï¿½ï¿½ë¹¦ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe6-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 6:// 0xFFE7 //Éè±¸Ãû¹¦ÄÜ
+				case 6:// 0xFFE7 //ï¿½è±¸ï¿½ï¿½ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe7-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 7:// 0xFFE8 //IOÊä³ö¹¦ÄÜ¹¦ÄÜ
+				case 7:// 0xFFE8 //IOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¹ï¿½ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe8-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 8:// 0xFFE9 //PWM¹¦ÄÜ
+				case 8:// 0xFFE9 //PWMï¿½ï¿½ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffe9-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 9:// 0xFFEA //¸´Î»Ä£¿é
+				case 9:// 0xFFEA //ï¿½ï¿½Î»Ä£ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffea-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 10:// 0xFFEB //·¢Éä¹¦ÂÊ
+				case 10:// 0xFFEB //ï¿½ï¿½ï¿½ä¹¦ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffeb-0000-1000-8000-00805f9b34fb"));
 				}break;
-				case 11:// 0xFFEC //RTC¹¦ÄÜ
+				case 11:// 0xFFEC //RTCï¿½ï¿½ï¿½ï¿½
 				{
 					ale =service.getCharacteristic(UUID.fromString("0000ffec-0000-1000-8000-00805f9b34fb"));
 				}break;
@@ -268,12 +284,12 @@ public class BluetoothLeService extends Service {
 				mBluetoothGatt.writeCharacteristic(gg);
 				return true;
 			}else{
-				//Toast toast = Toast.makeText(DeviceControlActivity.this, "ÌáÊ¾£¡UUIDÊäÈë¸ñÊ½²»¶Ô", Toast.LENGTH_SHORT); 
+				//Toast toast = Toast.makeText(DeviceControlActivity.this, "ï¿½ï¿½Ê¾ï¿½ï¿½UUIDï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT); 
     			//toast.show(); 
 				return false;
 			}
 		}else {
-			//Toast toast = Toast.makeText(DeviceControlActivity.this, "ÌáÊ¾£¡UUIDÊäÈë²»¶Ô", Toast.LENGTH_SHORT); 
+			//Toast toast = Toast.makeText(DeviceControlActivity.this, "ï¿½ï¿½Ê¾ï¿½ï¿½UUIDï¿½ï¿½ï¿½ë²»ï¿½ï¿½", Toast.LENGTH_SHORT); 
 			//toast.show(); 
 			return false;
 		}
